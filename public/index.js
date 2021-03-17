@@ -1,6 +1,7 @@
 let transactions = [];
 let myChart;
 
+//Calls on service worker file to read information within it to use it.
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
     navigator.serviceWorker.register("service-worker.js").then(reg => {

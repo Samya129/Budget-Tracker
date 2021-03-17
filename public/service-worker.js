@@ -12,7 +12,7 @@ const FILES_TO_CACHE = [
 const CACHE_NAME = "static-cache-v2";
 const DATA_CACHE_NAME = "data-cache-v1";
 
-// install
+// installation function
 self.addEventListener("install", function (evt) {
   evt.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
@@ -21,13 +21,13 @@ self.addEventListener("install", function (evt) {
     })
   );
 
-  self.skipWaiting();
+  self.skipWaiting(); //ServiceWorkerGlobalScope forces the waiting service worker to become the active service worker.
 });
 
 //Activate Listener
 self.addEventListener("activate", function (evt) {
   evt.waitUntil(
-    caches.keys().then((keyList) => {
+    caches.keys().then((keyList) => { // The part activated is the part that will be triggered when our web application page is closed, so we can use it when we want to replace or delete the old service worker with the latest.
       return Promise.all(
         keyList.map((key) => {
           if (key !== CACHE_NAME && key !== DATA_CACHE_NAME) {
@@ -61,7 +61,7 @@ self.addEventListener("fetch", function (evt) {
             })
             .catch((err) => {
               // Network request failed, try to get it from the cache.
-              return cache.match(evt.request);
+              return cache.match(evt.request); //looking through catch object for its "match".
             });
         })
         .catch((err) => console.log(err))
@@ -74,7 +74,7 @@ self.addEventListener("fetch", function (evt) {
   // see https://developers.google.com/web/fundamentals/instant-and-offline/offline-cookbook#cache-falling-back-to-network
   evt.respondWith(
     caches.match(evt.request).then(function (response) {
-      return response || fetch(evt.request);
+      return response || fetch(evt.request); //return what they asked for or go and get it.
     })
   );
 });
