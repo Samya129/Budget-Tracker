@@ -1,7 +1,15 @@
 let transactions = [];
 let myChart;
 
-fetch("/api/transaction")
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("service-worker.js").then(reg => {
+      console.log("We found your service worker file!", reg);
+    });
+  });
+}
+
+fetch("/api/transaction") //http pipeline access for manipulation
   .then(response => {
     return response.json();
   })
@@ -136,7 +144,7 @@ function sendTransaction(isAdding) {
   })
   .catch(err => {
     // fetch failed, so save in indexed db
-    saveRecord(transaction);
+    saveRecord(transaction); //indexedDB.js
 
     // clear form
     nameEl.value = "";
