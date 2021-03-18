@@ -1,37 +1,3 @@
-// function checkForIndexedDb() {
-//     window.indexedDB =
-//       window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
-  
-//     window.IDBTransaction =
-//       window.IDBTransaction || window.webkitIDBTransaction || window.msIDBTransaction;
-//     window.IDBKeyRange = window.IDBKeyRange || window.webkitIDBKeyRange || window.msIDBKeyRange;
-  
-//     if (!window.indexedDB) {
-//       console.log("Your browser doesn't support a stable version of IndexedDB.");
-//       return false;
-//     }
-//     return true;
-//   }
-
-//   const request = window.indexedDB.open("toDoList", 1);
-
-//       // Create an object store inside the onupgradeneeded method.
-//       //onupgradeneeded is a universal method also. It is how we create a table.
-//       request.onupgradeneeded = ({ target }) => {
-//         const db = target.result;
-//         //const objectStore = db.createObjectStore("toDoList");
-
-//         const transaction = db.transaction(["toDoList"], "readwrite");
-//          //transaction means use todoList table and which objectstore are we dealing with? todoList
-//         const toDoListStore = transaction.objectStore("toDoList");//this is used to add data within line 35 down.
-//         const statusIndex = toDoListStore.index("statusIndex");
-//       };
-
-//       // On success console the result.
-//       request.onsuccess = event => {
-//         console.log(request.result);
-//       };
-
 let db;
 let count = 0;
 // create a new db request for a "budget" database.
