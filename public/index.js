@@ -51,7 +51,7 @@ function populateTable() {
 
 function populateChart() {
   // copy array and reverse it
-  let reversed = transactions.slice().reverse();
+  let reversed = transactions.slice().reverse(); // why slicing here?
   let sum = 0;
 
   // create date labels for chart
@@ -71,7 +71,7 @@ function populateChart() {
     myChart.destroy();
   }
 
-  let ctx = document.getElementById("myChart").getContext("2d");
+  let ctx = document.getElementById("myChart").getContext("2d"); //what is 2d?
 
   myChart = new Chart(ctx, {
     type: 'line',
@@ -81,7 +81,7 @@ function populateChart() {
             label: "Total Over Time",
             fill: true,
             backgroundColor: "#6666ff",
-            data
+            data //why data when object is data?
         }]
     }
   });
@@ -105,17 +105,18 @@ function sendTransaction(isAdding) {
   let transaction = {
     name: nameEl.value,
     value: amountEl.value,
-    date: new Date().toISOString()
+    date: new Date().toISOString() //number values for the whole date
   };
 
   // if subtracting funds, convert amount to negative number
   if (!isAdding) {
-    transaction.value *= -1;
+    transaction.value *= -1; //to actually subtract it.
+    //Example: -10 dollars. 10*-1= -10
   }
 
   // add to beginning of current array of data
-  transactions.unshift(transaction);
-
+  transactions.unshift(transaction); //unshift puts something in the beginning of the array.
+ //Other shifts: .Pop
   // re-run logic to populate ui with new record
   populateChart();
   populateTable();

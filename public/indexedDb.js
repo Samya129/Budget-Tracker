@@ -21,10 +21,10 @@ request.onsuccess = function (event) {
 };
 
 request.onerror = function (event) {
-  // log error here
+  console.log("Database was unsuccessful" + event.target.errorCode)
 };
 
-function saveRecord(record) {
+function saveRecord(record) { //save to indexedDb forwhatever reason it's offline.
   // create a transaction on the pending db with readwrite access
   // access your pending object store
   // add record to your store with add method.
@@ -46,7 +46,7 @@ function checkDatabase() {
 //below code is  previously given:
   getAll.onsuccess = function () {
     if (getAll.result.length > 0) {
-      fetch('/api/transaction/bulk', {
+      fetch('/api/transaction/bulk', { //extra stuff (offline)
         method: 'POST',
         body: JSON.stringify(getAll.result),
         headers: {
