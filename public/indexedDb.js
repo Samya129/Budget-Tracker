@@ -1,49 +1,45 @@
 let db;
-let count = 0;
+
 // create a new db request for a "budget" database.
 const request = indexedDB.open('budget', 1)
 
 request.onupgradeneeded = function (event) {
   // create object store called "pending" and set autoIncrement to true
-  db = request.result
-  const objectStore = db.createObjectStore('pending', {keyPath: 'pendingID', autoIncrement: true})
-  objectStore.createIndex('pendingIndex', 'pendingValue')
-
-  console.log("")
+  const db = event.target.result;
+  db.createObjectStore('pending', {autoIncrement: true});
 };
 
 request.onsuccess = function (event) {
   db = event.target.result;
 
+// check if app is online before reading from db
   if (navigator.onLine) {
     checkDatabase();
   }
 };
 
 request.onerror = function (event) {
-  console.log("Database was unsuccessful" + event.target.errorCode)
+  console.log("Database was unsuccessful" + event.target.errorCode);
 };
 
 function saveRecord(record) { //save to indexedDb forwhatever reason it's offline.
   // create a transaction on the pending db with readwrite access
   // access your pending object store
   // add record to your store with add method.
-  const transaction = db.transaction(['pending'], 'readwrite')
-  const pendingStore = transaction.objectStore('pending')
+  const transaction = db.transaction(['pending'], 'readwrite');
+  const pendingStore = transaction.objectStore('pending');
 
-  pendingStore.add({pendingID: count.toString(), pendingValue: record.value})
-  count++
+  pendingStore.add(record);
 }
 
 function checkDatabase() {
   // open a transaction on your pending db
   // access your pending object store
   // get all records from store and set to a variable
-  const transaction = db.transaction(['pending'], 'readwrite')
-  const budgetStore = transaction.objectStore('pending')
-  const getAll = budgetStore.openCursor()
+  const transaction = db.transaction(['pending'], 'readwrite');
+  const budgetStore = transaction.objectStore('pending');
+  const getAll = budgetStore.getAll();
   
-//below code is  previously given:
   getAll.onsuccess = function () {
     if (getAll.result.length > 0) {
       fetch('/api/transaction/bulk', { //extra stuff (offline)
@@ -59,9 +55,9 @@ function checkDatabase() {
           // if successful, open a transaction on your pending db
           const transaction = db.transaction(["pending"], "readwrite");
           // access your pending object store
-          const store = transaction.objectStore("pending");
+          const budgetStore = transaction.objectStore("pending");
           // clear all items in your store
-          store.clear();
+          budgetStore.clear();
         });
     }
   };
