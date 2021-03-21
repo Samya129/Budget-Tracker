@@ -83,7 +83,7 @@ Must have deployed application with Heroku and MongoDB Atlas
 
 ## Application
 
-![Budget-Tracker](./assets/Budget-Tracker.mp4)
+[Budget-Tracker Demo](https://drive.google.com/file/d/1MveikNHgdXko3qATu3Mys0B156OCakiy/view)
 
 * [Deployed Application](https://pure-mountain-07135.herokuapp.com/)
 
